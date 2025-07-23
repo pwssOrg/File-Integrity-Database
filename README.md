@@ -1,6 +1,4 @@
 # Database Repository
-
-## Overview
 This repository contains the database schema and related scripts for File-Integrity-Scanner.
 
 ## Tables
@@ -58,6 +56,7 @@ This PowerShell script initializes the "integrity_hash" PostgreSQL database by c
     .\create_all_tables.ps1 [-InsertTestData $true]
     ```
     - Use the `-InsertTestData` switch if you want to insert mock data after creating the tables.
+
 
 ### drop_all_tables.ps1
 This PowerShell script resets the "integrity_hash" PostgreSQL database by dropping all tables after verifying that the required environment variables are set.
