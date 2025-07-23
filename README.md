@@ -70,3 +70,9 @@ Ensure `INTEGRITY_HASH_DB_USER` and `INTEGRITY_HASH_DB_PASSWORD` environment var
 
 ## Requirements
 - PostgreSQL 17.5 ([documentation](https://www.postgresql.org/docs/17/index.html))
+
+## Discussion Forum
+Please visit our discussion forum for project-related documentation and discussions: [Project Discussion
+Forum](https://github.com/orgs/pwssOrg/discussions/categories/file-integrity-database)
+
+
