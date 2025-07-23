@@ -34,7 +34,7 @@ This repository contains the database schema and related scripts for File-Integr
 - `notes`: Optional notes about the scan.
 - `monitored_directory_id`: References the monitored directory that was scanned.
 
-### scam_details
+### scan_details
 - `id`: Unique identifier for the scan detail record.
 - `scan_id`: References the associated scan in the `scans` table.
 - `file_id`: References the file that was scanned in the `files` table.
