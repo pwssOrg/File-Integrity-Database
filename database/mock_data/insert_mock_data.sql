@@ -23,7 +23,7 @@ INSERT INTO checksum (file_id, checksum_sha256, checksum_sha3, checksum_blake_2b
 (3, 'b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3', 'd4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4', 'e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6');
 
 -- Insert mock scan details linking scans, files, and checksums
-INSERT INTO scan_details (scan_id, file_id, checksum_id) VALUES
+INSERT INTO scan_summary (scan_id, file_id, checksum_id) VALUES
 (1, 1, 1),
 (1, 2, 2),
 (3, 3, 3);

@@ -20,7 +20,7 @@ try {
   $DBCmd = $DBConn.CreateCommand();
 
   ## Define the order of table creation
-  $tableOrder = @("file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_details.sql")
+  $tableOrder = @("file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql")
 
   foreach ($tableFile in $tableOrder) {
     $filePath = Join-Path "tables" $tableFile
