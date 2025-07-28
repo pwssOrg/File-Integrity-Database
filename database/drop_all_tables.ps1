@@ -18,11 +18,11 @@ try {
     $DBCmd = $DBConn.CreateCommand();
     ## Drop tables if they exist
     $DBCmd.CommandText = @"
-DROP TABLE IF EXISTS checksums CASCADE;
-DROP TABLE IF EXISTS files CASCADE;
-DROP TABLE IF EXISTS scan_details CASCADE;
-DROP TABLE IF EXISTS scans CASCADE;
-DROP TABLE IF EXISTS monitored_directories CASCADE;
+DROP TABLE IF EXISTS checksum CASCADE;
+DROP TABLE IF EXISTS file CASCADE;
+DROP TABLE IF EXISTS scan_summary CASCADE;
+DROP TABLE IF EXISTS scan CASCADE;
+DROP TABLE IF EXISTS monitored_directory CASCADE;
 "@
     $rowsAffected = $DBCmd.ExecuteNonQuery();
     Write-Output "$rowsAffected rows affected by DROP statements."
