@@ -17,9 +17,9 @@ This repository contains the database schema and related scripts for File-Integr
 
 | id  | file_id | checksum_sha256                                    | checksum_sha3                                       | checksum_blake_2b                               |
 |-----|---------|----------------------------------------------------|-----------------------------------------------------|------------------------------------------------|
-| 1   | 1       | abcd1234efghijklmnopqrstuvwxyz0987654321abcde        | fghijklmnopqrstuvwxyz...        | hijklmnopq...     |
-| 2   | 2       | efgh5678ijklmnopqrstuvwxyzabcd12340987654321e       | ijklmnopqrstuvwxyzabcd...            | jklmnopq...    |
-| 3   | 3       | ghij9012klmnopqrstuvwxyzabcd1234ef56780987g         | klmnopqrstuvwxyzabcdef...           | lmnopq...      |
+| 1   | 1       | abcd1234efghijk...       | fghijklmnopqrstuvwxyz...        | hijklmnopq...     |
+| 2   | 2       | efgh5678ijklmnd...       | ijklmnopqrstuvwxyzabcd...            | jklmnopq...    |
+| 3   | 3       | ghij9012klmnopq...        | klmnopqrstuvwxyzabcdef...           | lmnopq...      |
 | ... | ...     | ...                                                | ...                                                 | ...                                            |
 
 
