@@ -3,42 +3,110 @@ This repository contains the database schema and related scripts for File-Integr
 
 ## Tables
 
-### checksums
-- `id`: Unique identifier for the checksum record.
-- `file_id`: References the associated file in the `files` table.
-- `checksum_sha256`: SHA-256 hash of the file.
-- `checksum_sha3`: SHA-3 hash of the file.
-- `checksum_blake_2b`: BLAKE2b hash of the file.
+### checksum
 
-### files
-- `id`: Unique identifier for the file record.
-- `path`: Full path to the file (must be unique).
-- `basename`: Name of the file.
-- `directory`: Directory containing the file.
-- `size`: Size of the file in bytes.
-- `mtime`: Timestamp when the file was last modified.
+| Column Name            | Data Type   | Description |
+|------------------------|-------------|-------------|
+| id                     | BIGSERIAL         | Unique identifier for the checksum record. |
+| file_id                | BIGINT         | References the associated file in the `file` table. |
+| checksum_sha256        | TEXT     | SHA-256 hash of the file. |
+| checksum_sha3          | TEXT     | SHA-3 hash of the file. |
+| checksum_blake_2b      | TEXT     | BLAKE2b hash of the file. |
 
-### monitored_directories
-- `id`: Unique identifier for the monitored directory.
-- `path`: Full path to the monitored directory (must be unique).
-- `is_active`: Indicates if the directory is currently being monitored.
-- `added_at`: Timestamp when the directory was added for monitoring.
-- `last_scanned`: Timestamp of the last scan performed on the directory.
-- `notes`: Optional notes about the directory.
-- `baseline_established`: Indicates if a baseline has been established for this directory.
+##### Example Data
 
-### scans
-- `id`: Unique identifier for the scan record.
-- `scan_time`: Timestamp when the scan was performed.
-- `status`: Status of the scan (e.g., completed, failed).
-- `notes`: Optional notes about the scan.
-- `monitored_directory_id`: References the monitored directory that was scanned.
+| id  | file_id | checksum_sha256                                    | checksum_sha3                                       | checksum_blake_2b                               |
+|-----|---------|----------------------------------------------------|-----------------------------------------------------|------------------------------------------------|
+| 1   | 1       | abcd1234efghijklmnopqrstuvwxyz0987654321abcde        | fghijklmnopqrstuvwxyz...        | hijklmnopq...     |
+| 2   | 2       | efgh5678ijklmnopqrstuvwxyzabcd12340987654321e       | ijklmnopqrstuvwxyzabcd...            | jklmnopq...    |
+| 3   | 3       | ghij9012klmnopqrstuvwxyzabcd1234ef56780987g         | klmnopqrstuvwxyzabcdef...           | lmnopq...      |
+| ... | ...     | ...                                                | ...                                                 | ...                                            |
 
-### scan_details
-- `id`: Unique identifier for the scan detail record.
-- `scan_id`: References the associated scan in the `scans` table.
-- `file_id`: References the file that was scanned in the `files` table.
-- `checksum_id`: References the checksum used for the file in the `checksums` table.
+
+
+### file
+
+| Column Name            | Data Type   | Description |
+|------------------------|-------------|-------------|
+| id                     | BIGSERIAL         | Unique identifier for the file record. |
+| path                   | TEXT UNIQUE     | Full path to the file (must be unique). |
+| basename               | TEXT     | Name of the file. |
+| directory              | TEXT     | Directory containing the file. |
+| size                   | INT      | Size of the file in bytes. |
+| mtime                  | TIMESTAMPTZ   | Timestamp when the file was last modified. |
+
+##### Example Data
+
+| id  | path                             | basename       | directory            | size    | mtime               |
+|-----|----------------------------------|----------------|----------------------|---------|---------------------|
+| 1   | /home/user/documents/report.pdf  | report.pdf     | /home/user/documents | 5242880 | 2023-01-01 08:00:00 |
+| 2   | /mnt/external/drive/backup.zip    | backup.zip     | /mnt/external/drive  | 10485760| 2023-02-01 09:00:00
+| 3   | /home/user/projects/code.py       | code.py        | /home/user/projects  | 2048    | 2023-03-01 10:00:00
+
+
+
+### monitored_directory
+
+| Column Name            | Data Type   | Description |
+|------------------------|-------------|-------------|
+| id                     | SERIAL         | Unique identifier for the monitored directory. |
+| path                   | TEXT UNIQUE     | Full path to the monitored directory (must be unique). |
+| is_active              | BOOLEAN     | Indicates if the directory is currently being monitored. |
+| added_at               | TIMESTAMPTZ   | Timestamp when the directory was added for monitoring. |
+| last_scanned           | TIMESTAMPTZ   | Timestamp of the last scan performed on the directory. |
+| notes                  | TEXT        | Optional notes about the directory. |
+| baseline_established   | BOOLEAN     | Indicates if a baseline has been established for this directory. |
+
+##### Example Data
+
+| id  | path                        | is_active | added_at           | last_scanned      | notes          | baseline_established |
+|-----|-----------------------------|-----------|--------------------|-------------------|----------------|---------------------|
+| 1   | /home/user/documents        | TRUE      | 2023-01-01 08:00:00| 2023-01-05 14:00:00| None           | TRUE                |
+| 2   | /mnt/external/drive         | FALSE     | 2023-02-01 09:00:00| 2023-02-10 15:00:00| Not in use      | FALSE               |
+| 3   | /home/user/projects         | TRUE      | 2023-03-01 10:00:00| 2023-03-15 16:00:00| Important files|                     |
+
+
+
+### scan
+
+| Column Name            | Data Type   | Description |
+|------------------------|-------------|-------------|
+| id                     | SERIAL         | Unique identifier for the scan record. |
+| scan_time              | TIMESTAMPTZ   | Timestamp when the scan was performed. |
+| status                 | TEXT     | Status of the scan (e.g., completed, failed). |
+| notes                  | TEXT        | Optional notes about the scan. |
+| monitored_directory_id | INT         | References the monitored directory that was scanned. |
+
+##### Example Data
+
+| id  | scan_time           | status   | notes              | monitored_directory_id |
+|-----|---------------------|----------|--------------------|------------------------|
+| 1   | 2023-01-01 10:00:00 | completed| Initial scan       | 501                    |
+| 2   | 2023-01-02 11:30:00 | failed   | Disk space error   | 502                    |
+| 3   | 2023-01-03 08:45:00 | completed| Routine scan       | 503                    |
+| ... | ...                 | ...      | ...                | ...                    |
+
+
+
+### scan_summary
+
+| Column Name | Data Type | Description |
+|-------------|-----------|-------------|
+| id          | SERIAL       | Unique identifier for the scan detail record. |
+| scan_id     | INT       | References the associated scan in the `scan` table. |
+| file_id     | BIGINT       | References the file that was scanned in the `file` table. |
+| checksum_id | BIGINT       | References the checksum used for the file in the `checksum` table. |
+
+##### Example Data
+
+| id  | scan_id | file_id | checksum_id |
+|-----|---------|---------|-------------|
+| 1   | 101     | 201     | 301         |
+| 2   | 102     | 202     | 302         |
+| 3   | 103     | 203     | 303         |
+| ... | ...     | ...     | ...         |
+
+
 
 ## PowerShell scripts
 
