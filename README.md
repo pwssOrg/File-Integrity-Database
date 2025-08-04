@@ -56,6 +56,7 @@ This repository contains the database schema and related scripts for File-Integr
 | last_scanned           | TIMESTAMPTZ   | Timestamp of the last scan performed on the directory. |
 | notes                  | TEXT        | Optional notes about the directory. |
 | baseline_established   | BOOLEAN     | Indicates if a baseline has been established for this directory. |
+| include_subdirectories | BOOLEAN     | Specifies whether scans should also include all subdirectories within the monitored directory. |
 
 ##### Example Data
 
