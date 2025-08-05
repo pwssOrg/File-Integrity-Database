@@ -1,8 +1,8 @@
 -- Insert mock monitored directories with their status and metadata
-INSERT INTO monitored_directory (path, is_active, added_at, last_scanned, notes, baseline_established) VALUES
-('/var/logs', TRUE, NOW() - INTERVAL '10 days', NOW() - INTERVAL '1 day', 'System log directory', TRUE),
-('/home/user/docs', TRUE, NOW() - INTERVAL '5 days', NULL, 'User documents', FALSE),
-('/etc', FALSE, NOW() - INTERVAL '20 days', NOW() - INTERVAL '5 days', 'Config files', TRUE);
+INSERT INTO monitored_directory (path, is_active, added_at, last_scanned, notes, baseline_established, include_subdirectories) VALUES
+('/var/logs', TRUE, NOW() - INTERVAL '10 days', NOW() - INTERVAL '1 day', 'System log directory', TRUE, TRUE),
+('/home/user/docs', TRUE, NOW() - INTERVAL '5 days', NULL, 'User documents', FALSE, FALSE),
+('/etc', FALSE, NOW() - INTERVAL '20 days', NOW() - INTERVAL '5 days', 'Config files', TRUE, TRUE);
 
 -- Insert mock scan records for the monitored directories
 INSERT INTO scan (scan_time, status, notes, monitored_directory_id) VALUES
