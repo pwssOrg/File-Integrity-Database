@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS user_session(
+id BIGSERIAL PRIMARY KEY,
+is_valid BOOL NOT NULL DEFAULT FALSE,
+session_key TEXT
+);

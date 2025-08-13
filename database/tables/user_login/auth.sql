@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS auth(
+id BIGSERIAL PRIMARY KEY,
+hash TEXT NOT NULL,
+auth_time bigint REFERENCES "time"(id) NOT NULL
+);
