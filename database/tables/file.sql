@@ -3,6 +3,6 @@ CREATE TABLE file (
     path TEXT NOT NULL UNIQUE,
     basename TEXT NOT NULL,
     directory TEXT NOT NULL,
-    size INTEGER NOT NULL,
+    size bigint NOT NULL,
     mtime TIMESTAMPTZ NOT NULL
 );
