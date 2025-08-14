@@ -35,7 +35,7 @@ try {
   }
 
   ## Define the order of table creation
-  $tableOrderUserLogin = @("time.sql", "user_session.sql", "auth.sql", "user.sql")
+  $tableOrderUserLogin = @("time.sql", "auth.sql", "user.sql")
 
 
   foreach ($tableFile in $tableOrderUserLogin) {
