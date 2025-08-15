@@ -23,6 +23,9 @@ DROP TABLE IF EXISTS file CASCADE;
 DROP TABLE IF EXISTS scan_summary CASCADE;
 DROP TABLE IF EXISTS scan CASCADE;
 DROP TABLE IF EXISTS monitored_directory CASCADE;
+DROP TABLE IF EXISTS user_ CASCADE;
+DROP TABLE IF EXISTS auth CASCADE;
+DROP TABLE IF EXISTS time CASCADE;
 "@
     $rowsAffected = $DBCmd.ExecuteNonQuery();
     Write-Output "$rowsAffected rows affected by DROP statements."

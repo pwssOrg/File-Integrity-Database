@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS auth(
+id SERIAL PRIMARY KEY,
+hash TEXT NOT NULL,
+auth_time int REFERENCES "time"(id) NOT NULL
+);

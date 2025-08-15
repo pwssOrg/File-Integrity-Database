@@ -1,6 +1,39 @@
 # Database Repository
 This repository contains the database schema and related scripts for File-Integrity-Scanner.
 
+## PowerShell scripts
+
+### create_all_tables.ps1
+This PowerShell script initializes the "integrity_hash" PostgreSQL database by creating all required tables and sequences. It also provides an option to insert mock test data for development or testing purposes.
+
+#### Usage
+1. **Set Environment Variables**  
+    Ensure the following environment variables are set with appropriate values:
+    - `INTEGRITY_HASH_DB_USER`
+    - `INTEGRITY_HASH_DB_PASSWORD`
+
+2. **Run the Script**  
+    ```powershell
+    .\create_all_tables.ps1 [-InsertTestData $true]
+    ```
+    - Use the `-InsertTestData` switch if you want to insert mock data after creating the tables.
+
+
+### drop_all_tables.ps1
+This PowerShell script resets the "integrity_hash" PostgreSQL database by dropping all tables after verifying that the required environment variables are set.
+
+#### Example Usage
+```powershell
+.\drop_all_tables.ps1
+```
+
+Ensure `INTEGRITY_HASH_DB_USER` and `INTEGRITY_HASH_DB_PASSWORD` environment variables are set before running the script.
+
+## Requirements
+- PostgreSQL 17.5 ([documentation](https://www.postgresql.org/docs/17/index.html))
+
+
+# File Integrity Scanner
 ## Tables
 
 ### checksum
@@ -32,7 +65,7 @@ This repository contains the database schema and related scripts for File-Integr
 | path                   | TEXT UNIQUE     | Full path to the file (must be unique). |
 | basename               | TEXT     | Name of the file. |
 | directory              | TEXT     | Directory containing the file. |
-| size                   | INT      | Size of the file in bytes. |
+| size                   | BIGINT      | Size of the file in bytes. |
 | mtime                  | TIMESTAMPTZ   | Timestamp when the file was last modified. |
 
 ##### Example Data
@@ -107,41 +140,63 @@ This repository contains the database schema and related scripts for File-Integr
 | 3   | 103     | 203     | 303         |
 | ... | ...     | ...     | ...         |
 
+# User Login
 
+## Tables
 
-## PowerShell scripts
+### auth
 
-### create_all_tables.ps1
-This PowerShell script initializes the "integrity_hash" PostgreSQL database by creating all required tables and sequences. It also provides an option to insert mock test data for development or testing purposes.
+| Column Name            | Data Type   | Description |
+|------------------------|-------------|-------------|
+| id                     | SERIAL         | Unique identifier for the authentication record. |
+| hash                   | TEXT          | Authentication hash of the user. |
+| auth_time              | INT           | References the associated time in the `time` table. |
 
-#### Usage
-1. **Set Environment Variables**  
-    Ensure the following environment variables are set with appropriate values:
-    - `INTEGRITY_HASH_DB_USER`
-    - `INTEGRITY_HASH_DB_PASSWORD`
+##### Example Data
 
-2. **Run the Script**  
-    ```powershell
-    .\create_all_tables.ps1 [-InsertTestData $true]
-    ```
-    - Use the `-InsertTestData` switch if you want to insert mock data after creating the tables.
+| id  | hash                          | auth_time |
+|-----|-------------------------------|-----------|
+| 1   | abcdefghijklmnopqrstuvwxyz... | 1         |
+| 2   | bcdefghijklmnopqrstuvwxyzabcd | 2         |
+| 3   | cdefghijklmnopqrstuvwxyzabcde | 3         |
+| ... | ...                           | ...       |
 
+### time
 
-### drop_all_tables.ps1
-This PowerShell script resets the "integrity_hash" PostgreSQL database by dropping all tables after verifying that the required environment variables are set.
+| Column Name            | Data Type   | Description |
+|------------------------|-------------|-------------|
+| id                     | SERIAL         | Unique identifier for the timestamp record. |
+| created                | TIMESTAMPTZ    | Timestamp when the record was created. |
+| updated                | TIMESTAMPTZ    | Timestamp when the record was last updated. |
 
-#### Example Usage
-```powershell
-.\drop_all_tables.ps1
-```
+##### Example Data
 
-Ensure `INTEGRITY_HASH_DB_USER` and `INTEGRITY_HASH_DB_PASSWORD` environment variables are set before running the script.
+| id  | created                         | updated                        |
+|-----|---------------------------------|-------------------------------|
+| 1   | 2023-10-01T12:00:00Z            | 2023-10-01T12:05:00Z           |
+| 2   | 2023-10-02T14:30:00Z            | 2023-10-02T14:35:00Z           |
+| 3   | 2023-10-03T08:15:00Z            | 2023-10-03T08:20:00Z           |
+| ... | ...                             | ...                           |
 
-## Requirements
-- PostgreSQL 17.5 ([documentation](https://www.postgresql.org/docs/17/index.html))
+### user_
+
+| Column Name            | Data Type   | Description |
+|------------------------|-------------|-------------|
+| id                     | SERIAL         | Unique identifier for the user record. |
+| username               | TEXT          | Username of the user (must be unique). |
+| auth_id                | INT           | References the associated authentication in the `auth` table. |
+| user_time              | INT           | References the associated time in the `time` table. |
+
+##### Example Data
+
+| id  | username      | auth_id | user_time |
+|-----|---------------|---------|-----------|
+| 1   | user1         | 1       | 1         |
+| 2   | user2         | 2       | 2         |
+| 3   | user3         | 3       | 3         |
+| ... | ...           | ...     | ...       |
+
 
 ## Discussion Forum
 Please visit our discussion forum for project-related documentation and discussions: [Project Discussion
 Forum](https://github.com/orgs/pwssOrg/discussions/categories/file-integrity-database)
-
-

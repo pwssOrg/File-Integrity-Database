@@ -19,11 +19,27 @@ try {
   $DBConn.Open();
   $DBCmd = $DBConn.CreateCommand();
 
-  ## Define the order of table creation
-  $tableOrder = @("file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql")
+  ## Define the order of table creation for file-integrity-scanner
+  $tableOrderFileIntegrityScanner = @("file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql")
 
-  foreach ($tableFile in $tableOrder) {
+  foreach ($tableFile in $tableOrderFileIntegrityScanner) {
     $filePath = Join-Path "tables" $tableFile
+    if (Test-Path $filePath) {
+      $DBCmd.CommandText = Get-Content $filePath -Raw
+      $rowsAffected = $DBCmd.ExecuteNonQuery()
+      Write-Output "Executed $tableFile - $rowsAffected rows affected."
+    }
+    else {
+      Write-Warning "Table definition file not found: $filePath"
+    }
+  }
+
+  ## Define the order of table creation
+  $tableOrderUserLogin = @("time.sql", "auth.sql", "user.sql")
+
+
+  foreach ($tableFile in $tableOrderUserLogin) {
+    $filePath = Join-Path "tables\user_login" $tableFile
     if (Test-Path $filePath) {
       $DBCmd.CommandText = Get-Content $filePath -Raw
       $rowsAffected = $DBCmd.ExecuteNonQuery()
