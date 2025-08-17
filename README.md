@@ -126,7 +126,7 @@ Ensure `INTEGRITY_HASH_DB_USER` and `INTEGRITY_HASH_DB_PASSWORD` environment var
 
 | Column Name | Data Type | Description |
 |-------------|-----------|-------------|
-| id          | SERIAL       | Unique identifier for the scan detail record. |
+| id          | BIGSERIAL       | Unique identifier for the scan detail record. |
 | scan_id     | INT       | References the associated scan in the `scan` table. |
 | file_id     | BIGINT       | References the file that was scanned in the `file` table. |
 | checksum_id | BIGINT       | References the checksum used for the file in the `checksum` table. |
