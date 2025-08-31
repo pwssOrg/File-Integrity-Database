@@ -19,8 +19,25 @@ try {
   $DBConn.Open();
   $DBCmd = $DBConn.CreateCommand();
 
+
+   ## Define the order of table creation
+  $tableOrderMixed = @("time.sql")
+
+  foreach ($tableFile in $tableOrderMixed) {
+    $filePath = Join-Path "tables\mixed" $tableFile
+    if (Test-Path $filePath) {
+      $DBCmd.CommandText = Get-Content $filePath -Raw
+      $rowsAffected = $DBCmd.ExecuteNonQuery()
+      Write-Output "Executed $tableFile - $rowsAffected rows affected."
+    }
+    else {
+      Write-Warning "Table definition file not found: $filePath"
+    }
+  }
+
+
   ## Define the order of table creation for file-integrity-scanner
-  $tableOrderFileIntegrityScanner = @("file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql")
+  $tableOrderFileIntegrityScanner = @("file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql","diff.sql")
 
   foreach ($tableFile in $tableOrderFileIntegrityScanner) {
     $filePath = Join-Path "tables" $tableFile
@@ -34,8 +51,10 @@ try {
     }
   }
 
+ 
+
   ## Define the order of table creation
-  $tableOrderUserLogin = @("time.sql", "auth.sql", "user.sql")
+  $tableOrderUserLogin = @("auth.sql", "user.sql")
 
 
   foreach ($tableFile in $tableOrderUserLogin) {
@@ -49,6 +68,12 @@ try {
       Write-Warning "Table definition file not found: $filePath"
     }
   }
+
+
+ 
+
+
+
 
   ## Insert test data if requested
   if ($InsertTestData) {
