@@ -37,7 +37,7 @@ try {
 
 
   ## Define the order of table creation for file-integrity-scanner
-  $tableOrderFileIntegrityScanner = @("file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql","diff.sql")
+  $tableOrderFileIntegrityScanner = @("note.sql","file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql","diff.sql")
 
   foreach ($tableFile in $tableOrderFileIntegrityScanner) {
     $filePath = Join-Path "tables" $tableFile
