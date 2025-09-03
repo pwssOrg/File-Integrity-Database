@@ -1,29 +1,40 @@
--- Insert mock monitored directories with their status and metadata
-INSERT INTO monitored_directory (path, is_active, added_at, last_scanned, notes, baseline_established, include_subdirectories) VALUES
-('/var/logs', TRUE, NOW() - INTERVAL '10 days', NOW() - INTERVAL '1 day', 'System log directory', TRUE, TRUE),
-('/home/user/docs', TRUE, NOW() - INTERVAL '5 days', NULL, 'User documents', FALSE, FALSE),
-('/etc', FALSE, NOW() - INTERVAL '20 days', NOW() - INTERVAL '5 days', 'Config files', TRUE, TRUE);
+-- Insert mock data into the time table
+INSERT INTO "time" (created, updated) VALUES
+('2023-01-01 00:00:00+00', '2023-01-01 00:00:00+00'),
+('2023-02-01 00:00:00+00', '2023-02-01 00:00:00+00');
 
--- Insert mock scan records for the monitored directories
-INSERT INTO scan (scan_time, status, notes, monitored_directory_id) VALUES
-(NOW() - INTERVAL '1 day', 'completed', 'Daily scan', 1),
-(NOW() - INTERVAL '2 days', 'failed', 'Disk error', 1),
-(NOW() - INTERVAL '3 days', 'completed', 'First scan of docs', 2);
+-- Insert mock data into the note table
+INSERT INTO note (notes, prev_notes, prev_prev_notes, time_id) VALUES
+('Note for file 1', NULL, NULL, 1),
+('Note for file 2', NULL, NULL, 2);
 
--- Insert mock files found in the monitored directories
+-- Insert mock data into the monitored_directory table
+INSERT INTO monitored_directory (path, is_active, time_id, last_scanned, note_id, baseline_established) VALUES
+('/var/log', TRUE, 1, '2023-01-01 00:00:00+00', NULL, FALSE),
+('/var/tmp', TRUE, 2, '2023-02-01 00:00:00+00', NULL, FALSE);
+
+-- Insert mock data into the file table
 INSERT INTO file (path, basename, directory, size, mtime) VALUES
-('/var/logs/syslog', 'syslog', '/var/logs', 1048576, NOW() - INTERVAL '1 day'),
-('/var/logs/auth.log', 'auth.log', '/var/logs', 524288, NOW() - INTERVAL '2 days'),
-('/home/user/docs/resume.pdf', 'resume.pdf', '/home/user/docs', 204800, NOW() - INTERVAL '1 day');
+('/var/log/syslog', 'syslog', '/var/log', 1024, '2023-01-01 00:00:00+00'),
+('/var/tmp/tempfile', 'tempfile', '/var/tmp', 2048, '2023-02-01 00:00:00+00');
 
--- Insert mock checksums for the files
+-- Insert mock data into the checksum table
 INSERT INTO checksum (file_id, checksum_sha256, checksum_sha3, checksum_blake_2b) VALUES
-(1, 'd2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2', 'e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3e3', 'b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4b4'),
-(2, 'a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1', 'c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2', 'f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5f5'),
-(3, 'b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3b3', 'd4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4', 'e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6');
+(1, 'sha256_checksum_1', 'sha3_checksum_1', 'blake2b_checksum_1'),
+(2, 'sha256_checksum_2', 'sha3_checksum_2', 'blake2b_checksum_2');
 
--- Insert mock scan details linking scans, files, and checksums
+-- Insert mock data into the scan table
+INSERT INTO scan (scan_time_id, status, note_id, monitored_directory_id, is_baseline_scan) VALUES
+(1, 'success', NULL, 1, TRUE),
+(2, 'failure', NULL, 2, FALSE);
+
+-- Insert mock data into the scan_summary table
 INSERT INTO scan_summary (scan_id, file_id, checksum_id) VALUES
 (1, 1, 1),
-(1, 2, 2),
-(3, 3, 3);
+(2, 2, 2);
+
+-- Insert mock data into the diff table
+INSERT INTO diff (baseline_id, integrity_fail_id, time_id) VALUES
+(1, 2, 1),
+(2, 1, 2);
+
