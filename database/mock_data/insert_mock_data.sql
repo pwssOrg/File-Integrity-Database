@@ -9,9 +9,9 @@ INSERT INTO note (notes, prev_notes, prev_prev_notes, time_id) VALUES
 ('Note for file 2', NULL, NULL, 2);
 
 -- Insert mock data into the monitored_directory table
-INSERT INTO monitored_directory (path, is_active, time_id, last_scanned, note_id, baseline_established) VALUES
-('/var/log', TRUE, 1, '2023-01-01 00:00:00+00', NULL, FALSE),
-('/var/tmp', TRUE, 2, '2023-02-01 00:00:00+00', NULL, FALSE);
+INSERT INTO monitored_directory (path, is_active, time_id, last_scanned, note_id, baseline_established, include_subdirectories) VALUES
+('/var/log', TRUE, 1, '2023-01-01 00:00:00+00', NULL, FALSE, TRUE),
+('/var/tmp', TRUE, 2, '2023-02-01 00:00:00+00', NULL, FALSE, TRUE);
 
 -- Insert mock data into the file table
 INSERT INTO file (path, basename, directory, size, mtime) VALUES
