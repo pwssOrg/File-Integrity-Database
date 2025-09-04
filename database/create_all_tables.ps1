@@ -20,7 +20,7 @@ try {
   $DBCmd = $DBConn.CreateCommand();
 
 
-   ## Define the order of table creation
+  ## Define the order of table creation
   $tableOrderMixed = @("time.sql")
 
   foreach ($tableFile in $tableOrderMixed) {
@@ -52,7 +52,6 @@ try {
   }
 
  
-
   ## Define the order of table creation
   $tableOrderUserLogin = @("auth.sql", "user.sql")
 
@@ -68,11 +67,6 @@ try {
       Write-Warning "Table definition file not found: $filePath"
     }
   }
-
-
- 
-
-
 
 
   ## Insert test data if requested
