@@ -1,7 +1,7 @@
 # Database Repository
 This repository contains the database schema and related scripts for File-Integrity-Scanner.
 
-![File Integrity Database](https://github.com/pwssOrg/File-Integrity-Database/blob/version_1_1/.github/assets/images/tobias-fischer-PkbZahEG2Ng-unsplash.jpg?raw=true)
+![File Integrity Database](https://github.com/pwssOrg/File-Integrity-Database/blob/master/.github/assets/images/tobias-fischer-PkbZahEG2Ng-unsplash.jpg?raw=true)
 
 ## PowerShell scripts
 
@@ -34,7 +34,7 @@ Ensure `INTEGRITY_HASH_DB_USER` and `INTEGRITY_HASH_DB_PASSWORD` environment var
 ## Requirements
 <B>PostgreSQL 17.5 ([documentation](https://www.postgresql.org/docs/17/index.html)) </b>
 
-![File Integrity Database](https://github.com/pwssOrg/File-Integrity-Database/blob/version_1_1/.github/assets/images/krzysztof-kowalik-KiH2-tdGQRY-unsplash.jpg?raw=true)
+![File Integrity Database](https://github.com/pwssOrg/File-Integrity-Database/blob/master/.github/assets/images/krzysztof-kowalik-KiH2-tdGQRY-unsplash.jpg?raw=true)
 
 ## Discussion Forum
 Please visit our discussion forum for project-related documentation and discussions: [Project Discussion
