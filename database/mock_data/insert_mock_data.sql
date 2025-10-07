@@ -5,13 +5,13 @@ INSERT INTO "time" (created, updated) VALUES
 
 -- Insert mock data into the note table
 INSERT INTO note (notes, prev_notes, prev_prev_notes, time_id) VALUES
-('Note for file 1', NULL, NULL, 1),
-('Note for file 2', NULL, NULL, 2);
+('Note 1', NULL, NULL, 1),
+('Note 2', NULL, NULL, 2);
 
 -- Insert mock data into the monitored_directory table
 INSERT INTO monitored_directory (path, is_active, time_id, last_scanned, note_id, baseline_established, include_subdirectories) VALUES
-('/var/log', TRUE, 1, '2023-01-01 00:00:00+00', NULL, FALSE, TRUE),
-('/var/tmp', TRUE, 2, '2023-02-01 00:00:00+00', NULL, FALSE, TRUE);
+('/var/log', TRUE, 1, '2023-01-01 00:00:00+00', 1, FALSE, TRUE),
+('/var/tmp', TRUE, 2, '2023-02-01 00:00:00+00', 2, FALSE, TRUE);
 
 -- Insert mock data into the file table
 INSERT INTO file (path, basename, directory, size, mtime) VALUES
@@ -25,8 +25,8 @@ INSERT INTO checksum (file_id, checksum_sha256, checksum_sha3, checksum_blake_2b
 
 -- Insert mock data into the scan table
 INSERT INTO scan (scan_time_id, status, note_id, monitored_directory_id, is_baseline_scan) VALUES
-(1, 'success', NULL, 1, TRUE),
-(2, 'failure', NULL, 2, FALSE);
+(1, 'success', 1, 1, TRUE),
+(2, 'failure', 2, 2, FALSE);
 
 -- Insert mock data into the scan_summary table
 INSERT INTO scan_summary (scan_id, file_id, checksum_id) VALUES

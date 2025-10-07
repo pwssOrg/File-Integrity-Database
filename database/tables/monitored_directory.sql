@@ -4,7 +4,7 @@ CREATE TABLE monitored_directory (
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     time_id bigint NOT NULL REFERENCES time(id),
     last_scanned TIMESTAMPTZ,
-    note_id bigint REFERENCES note(id),
+    note_id bigint NOT NULL REFERENCES note(id),
     baseline_established BOOLEAN NOT NULL DEFAULT FALSE,
     include_subdirectories BOOLEAN NOT NULL DEFAULT TRUE
 );
