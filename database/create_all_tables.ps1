@@ -37,7 +37,7 @@ try {
 
 
   ## Define the order of table creation for file-integrity-scanner
-  $tableOrderFileIntegrityScanner = @("note.sql","file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql","diff.sql")
+  $tableOrderFileIntegrityScanner = @("note.sql","file.sql", "checksum.sql", "monitored_directory.sql", "scan.sql", "scan_summary.sql","diff.sql","license.sql")
 
   foreach ($tableFile in $tableOrderFileIntegrityScanner) {
     $filePath = Join-Path "tables" $tableFile
@@ -67,6 +67,23 @@ try {
       Write-Warning "Table definition file not found: $filePath"
     }
   }
+
+
+  ## Insert License key
+  
+ $licenseScriptPath = ".\license_key\license_key_for_create_db_script.sql"
+    if (Test-Path $licenseScriptPath) {
+      $DBCmd.CommandText = Get-Content $licenseScriptPath -Raw
+      $rowsAffected = $DBCmd.ExecuteNonQuery()
+      Write-Output "Inserted license-key data - $rowsAffected rows affected."
+    }
+    else {
+      Write-Warning "License-key data file not found: $licenseScriptPath"
+    }
+
+
+
+  
 
 
   ## Insert test data if requested
