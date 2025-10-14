@@ -28,6 +28,7 @@ DROP TABLE IF EXISTS auth CASCADE;
 DROP TABLE IF EXISTS diff CASCADE;
 DROP TABLE IF EXISTS note CASCADE;
 DROP TABLE IF EXISTS time CASCADE;
+DROP TABLE IF EXISTS license CASCADE;
 "@
     $rowsAffected = $DBCmd.ExecuteNonQuery();
     Write-Output "$rowsAffected rows affected by DROP statements."
