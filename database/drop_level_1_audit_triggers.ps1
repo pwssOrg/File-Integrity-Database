@@ -16,7 +16,7 @@ try {
     $DBConn.ConnectionString = $DBConnectionString;
     $DBConn.Open();
     $DBCmd = $DBConn.CreateCommand();
-    ## Drop tables if they exist
+    ## Drop triggers if they exist
     $DBCmd.CommandText = @"
  DROP TRIGGER psql_audit_trigger_monitored_directory ON monitored_directory;
 
