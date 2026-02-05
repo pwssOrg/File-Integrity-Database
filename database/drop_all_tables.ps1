@@ -2,7 +2,7 @@
 
 Import-Module ".\functions_ps\pwss_powershell_utility.psm1"
 
-## Drop all tables and sequences from the file integrity scanner databse
+## Drop all tables and sequences from the file integrity scanner database
 
 ## Check if environment variables for database user and password are set
 if (-not $env:INTEGRITY_HASH_DB_USER -or -not $env:INTEGRITY_HASH_DB_PASSWORD) {
