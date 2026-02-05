@@ -34,3 +34,8 @@ catch {
     Write-Output "$($_.Exception.Message)" | Red
     Write-Output "An error occurred. Contact peter.westin@pwss.dev or stefan.smudja@pwss.dev for support!" | Red
 }
+finally {
+    if ($null -ne $DBConn -and $DBConn.State -eq 'Open') {
+        $DBConn.Close();
+    }
+}
