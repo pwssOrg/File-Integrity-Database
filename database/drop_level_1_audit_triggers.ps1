@@ -18,13 +18,13 @@ try {
     $DBCmd = $DBConn.CreateCommand();
     ## Drop triggers if they exist
     $DBCmd.CommandText = @"
- DROP TRIGGER psql_audit_trigger_monitored_directory ON monitored_directory;
+ DROP TRIGGER IF EXISTS psql_audit_trigger_monitored_directory ON monitored_directory;
 
- DROP TRIGGER psql_audit_trigger_license ON license;
+ DROP TRIGGER IF EXISTS psql_audit_trigger_license ON license;
 
- DROP TRIGGER psql_audit_trigger_auth ON auth;
+ DROP TRIGGER IF EXISTS psql_audit_trigger_auth ON auth;
 
- DROP TRIGGER psql_audit_trigger_user_ ON user_;
+ DROP TRIGGER IF EXISTS psql_audit_trigger_user_ ON user_;
 "@
     $rowsAffected = $DBCmd.ExecuteNonQuery();
     Write-Output "$rowsAffected rows affected by DROP statements."

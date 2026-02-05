@@ -18,9 +18,9 @@ try {
     $DBCmd = $DBConn.CreateCommand();
     ## Drop triggers if they exist
     $DBCmd.CommandText = @"
- DROP TRIGGER psql_audit_trigger_checksum ON checksum;
+ DROP TRIGGER IF EXISTS psql_audit_trigger_checksum ON checksum;
 
- DROP TRIGGER psql_audit_trigger_diff ON diff;
+ DROP TRIGGER IF EXISTS psql_audit_trigger_diff ON diff;
 
 
 "@

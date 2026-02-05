@@ -12,7 +12,7 @@ if (-not $env:INTEGRITY_HASH_DB_USER -or -not $env:INTEGRITY_HASH_DB_PASSWORD) {
 }
 
 try {
-  ## Connect to the integrity hash database and add all tables, tables, and sequences to it.
+  ## Connect to the integrity hash database
   $DBConnectionString = "Driver={PostgreSQL UNICODE};Server=localhost;Port=26556;Database=integrity_hash;Uid=$env:INTEGRITY_HASH_DB_USER;Pwd=$env:INTEGRITY_HASH_DB_PASSWORD;"
   $DBConn = New-Object System.Data.Odbc.OdbcConnection;
   $DBConn.ConnectionString = $DBConnectionString;
@@ -67,13 +67,30 @@ try {
   }
 
 }
+
+ $appNamePath = ".\session\set_psql_app_name.sql"
+    if (Test-Path $appNamePath) {
+      $DBCmd.CommandText = Get-Content $appNamePath -Raw
+      $rowsAffected = $DBCmd.ExecuteNonQuery()
+      Write-Output "Addeed app name (psql) - $rowsAffected rows affected."	
+   }
+
+  else {
+      Write-Warning "Session definition file not found: $appNamePath"
+    }
+
  
  
-  $DBConn.Close();
   Write-Output "Success! The Trigger Function and the selected audit triggers have been added to the integrity hash database." | Green
 }
 
 catch {
   Write-Output "An error occurred: $($_.Exception.Message)" | Red
   Write-Output "Contact peter.westin@pwss.dev or stefan.smudja@pwss.dev for support!" | Red
+}
+
+finally {
+    if ($null -ne $DBConn -and $DBConn.State -ne [System.Data.ConnectionState]::Closed) {
+        $DBConn.Close();
+    }
 }
