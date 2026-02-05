@@ -28,11 +28,15 @@ try {
 "@
     $rowsAffected = $DBCmd.ExecuteNonQuery();
     Write-Output "$rowsAffected rows affected by DROP statements."
-    $DBConn.Close();
 
     Write-Output "Success! The file integrity scan database is now free of level 1 triggers." | Green
 }
 catch {
     Write-Output "$($_.Exception.Message)" | Red
     Write-Output "An error occurred. Contact peter.westin@pwss.dev or stefan.smudja@pwss.dev for support!" | Red
+}
+finally {
+    if ($null -ne $DBConn -and $DBConn.State -ne [System.Data.ConnectionState]::Closed) {
+        $DBConn.Close();
+    }
 }
