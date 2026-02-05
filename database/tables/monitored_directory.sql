@@ -8,3 +8,6 @@ CREATE TABLE monitored_directory (
     baseline_established BOOLEAN NOT NULL DEFAULT FALSE,
     include_subdirectories BOOLEAN NOT NULL DEFAULT TRUE
 );
+
+SET application_name = 'psql';
+SHOW application_name;
