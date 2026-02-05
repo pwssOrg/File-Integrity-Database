@@ -75,5 +75,5 @@ try {
 
 catch {
   Write-Output "An error occurred: $($_.Exception.Message)" | Red
-  Write-Output "Contact peter.westin@pwss.dev or stefan.smudja@pwss.decv for support!" | Red
+  Write-Output "Contact peter.westin@pwss.dev or stefan.smudja@pwss.dev for support!" | Red
 }
