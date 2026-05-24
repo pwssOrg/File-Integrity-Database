@@ -39,3 +39,22 @@ Ensure `INTEGRITY_HASH_DB_USER` and `INTEGRITY_HASH_DB_PASSWORD` environment var
 ## Discussion Forum
 Please visit our discussion forum for project-related documentation and discussions: [Project Discussion
 Forum](https://github.com/orgs/pwssOrg/discussions/categories/file-integrity-database)
+
+## System Architecture
+
+The system is split into backend services, a GUI client, shared PWSS libraries, and an end-user distribution package. This modular architecture enables independent development of core security logic, user interface components, and deployment tooling for both technical and non-technical users. Each component can be developed and deployed independently while maintaining a shared security and hashing standard through the PWSS libraries.
+
+### Components
+
+- **[Core Backend (FIM Engine)](https://github.com/pwssOrg/File-Integrity-Scanner)** – Handles hashing, integrity verification, and monitoring logic
+- **[GUI Application](https://github.com/pwssOrg/File-Integrity-GUI)** – User interface for managing scans and viewing results
+- **PWSS Libraries** – Shared components used across all PWSS projects
+- **[PWSS Release Repository](https://github.com/pwssOrg/PWSS-Release-File-Integrity-Scanner)** – End-user distribution for Windows and Linux
+
+This repository represents the **Database** layer of the File Integrity Scanner system — containing the PostgreSQL schema, table definitions, sequences, audit triggers, and setup/teardown scripts.
+
+```
+GUI → Local Backend → PostgreSQL  ← (this repository)
+          ↓
+   PWSS Libraries (dependency)
+```
